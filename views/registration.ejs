@@ -315,21 +315,35 @@
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            
 
-        <!-- <label for="age">Age:</label>
+            <label for="role">Role:</label>
+            <select name="role" id="selectId">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select><br><br>
+
+            <script>
+                let role = "student"
+                const selectElement = document.getElementById("selectId");
+                selectElement.addEventListener("change", function() {  
+                role = selectElement.value;
+                let age = document.getElementById("ageContainer")
+                if (role == "teacher") age.style.display = "none"
+                else age.style.display = "inline"
+                });
+            
+            </script>
+
+            <div id="ageContainer">
+            <label for="age">Age:</label>
             <select id="age" name="age" required>
                 <option value="">Select your age</option>
                 <% for (let i = 13; i <= 20; i++) { %>
                     <option value="<%= i %>"><%= i %></option>
                 <% } %>
-            </select>-->
-
-          <!--  <label for="role">Role:</label>
-  <select name="role">
-    <option value="student">Student</option>
-    <option value="teacher">Teacher</option>
-  </select><br><br> -->
-
+            </select>
+            </div>
             
             <div style="margin-top: 0.5cm;">
                 <label for="school">School:</label>

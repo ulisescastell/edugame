@@ -73,15 +73,19 @@ app.get("/update-student/:id", (req, res) => {
   });
 });
 
+
 // Kullanıcı Kaydı (Örnek İşlev)
 app.post("/register", (req, res) => {
   const { email, password, fullname, school } = req.body;
 
+  const role = req.body.role;
   // Kullanıcı bilgilerini veritabanına ekle
-  const query =
-    "INSERT INTO teachers (email, password, fullname, school) VALUES (?, ?, ?, ?)";
 
-  db.query(
+  let query 
+  if ( role == "student") query =  "INSERT INTO students (email, password, fullname, school) VALUES (?, ?, ?, ?)";
+  else query =  "INSERT INTO teachers (email, password, fullname, school) VALUES (?, ?, ?, ?)";
+
+    db.query(
     query,
     [email, password, fullname,  school],
     (err, results) => {
@@ -98,7 +102,7 @@ app.post("/register", (req, res) => {
 
 app.get("/teacher/dashboard", (req, res) => {
   // Sadece öğretmenler bu sayfayı görebilmeli, role kontrolü ekleyin
-  const role = req.session.role; // Session'da öğretmen olup olmadığı kontrol edilmeli
+  role = req.session.role; // Session'da öğretmen olup olmadığı kontrol edilmeli
 
   if (role !== "teacher") {
     return res
