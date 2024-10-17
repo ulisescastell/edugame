@@ -15,54 +15,7 @@
             padding: 0;
         }
 
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Navbar stilleri */
-        .navbar {
-            background-color: #4CAF50;
-            overflow: hidden;
-            padding: 10px;
-        }
-
-        .navbar a {
-            float: left;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-        }
-
-        .navbar a:hover {
-            background-color: #45a049;
-        }
-
-        .navbar img {
-            float: left;
-            margin-right: 10px;
-            width: 40px;
-            height: 40px;
-        }
-
-        .navbar .auth-buttons {
-            float: right;
-        }
-
-        .navbar .auth-buttons button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .navbar .auth-buttons button:hover {
-            background-color: #555;
-        }
+        
 
         /* Ana içerik */
         h1 {
@@ -99,6 +52,10 @@
             text-align: center;
             padding: 10px 0;
             margin-top: 20px;
+            position: fixed;
+            left:0px;
+            right: 0px;
+            bottom:0px;
         }
 
         /* Color Blind Mode */
@@ -141,20 +98,8 @@
         }
     </style>
 </head>
+<%- include('./partials/_header') %>
 <body>
-    <!-- Navbar -->
-    <div class="navbar">
-        <a href="#"><img src="https://via.placeholder.com/40" alt="EduGaming Logo"></a>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="#games">Games</a>
-        <a href="#contact">Contact</a>
-        <div class="auth-buttons">
-            <button onclick="window.location.href='/register';">Register</button>
-            <button onclick="window.location.href='/login';">Login</button>
-        </div>
-    </div>
-
     <!-- Ana İçerik -->
     <div class="container">
         <h1>Welcome to EduGaming!</h1>
@@ -163,16 +108,12 @@
         <!-- Oyun İndirme Butonu -->
         <a href="/download-game" class="game-download-btn">Download the Game Now</a>
 
-        <!-- Color Blind Mode -->
+
         <button class="color-blind-mode" onclick="toggleColorBlindMode()">Enable Color Blind Mode</button>
+    
     </div>
+    <%- include('./partials/_footer') %>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 EduGaming. All Rights Reserved.</p>
-    </footer>
-
-    <!-- JavaScript -->
     <script>
         function toggleColorBlindMode() {
             document.body.classList.toggle('color-blind-active');

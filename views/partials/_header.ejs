@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+        /* Navbar stilleri */
+        .navbar {
+            background-color: #4CAF50;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .navbar a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+        }
+
+        .navbar img {
+            float: left;
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .navbar .auth-buttons {
+            float: right;
+        }
+
+        .navbar .auth-buttons button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .navbar .auth-buttons button:hover {
+            background-color: #555;
+        }
+
+        .color-blind-active {
+            background-color: #EFEFEF;
+            color: #000;
+        }
+
+        .color-blind-active .navbar {
+            background-color: #2c3e50;
+        }
+
+        .color-blind-active .navbar a {
+            background-color: #2c3e50;
+            color: #FFF;
+        }
+
+        .color-blind-active .game-download-btn {
+            background-color: #555;
+            color: #FFF;
+        }
+
+        .color-blind-active .game-download-btn:hover {
+            background-color: #333;
+        }
+    </style>
+    
+    <header class="navbar">
+        <a href="#"><img src="https://via.placeholder.com/40" alt="EduGaming Logo"></a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="#games">Games</a>
+        <a href="#contact">Contact</a>
+        <div class="auth-buttons">
+            <button onclick="window.location.href='/register';">Register</button>
+            <button onclick="window.location.href='/login';">Login</button>
+        </div>
+    </header>
+<body>
+</body>
+</html>
