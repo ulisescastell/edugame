@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const path = require("path");
 const methodOverride = require("method-override");
+const bcrypt = require("bcrypt")
 require("dotenv").config();
 
 const pageRoute = require("./routes/pageRouter");
@@ -11,6 +12,8 @@ const pageRoute = require("./routes/pageRouter");
 // Express uygulaması oluştur
 const app = express();
 const port = 3000;
+
+const saltRounds = 10
 
 // Statik dosyalar için public dizinini kullan
 app.set("view engine", "ejs");
@@ -75,7 +78,7 @@ app.get("/update-student/:id", (req, res) => {
 
 
 // Kullanıcı Kaydı (Örnek İşlev)
-app.post("/register", (req, res) => {
+/*app.post("/register", (req, res) => {
   const { email, password, fullname, school } = req.body;
 
   const role = req.body.role;
@@ -88,16 +91,87 @@ app.post("/register", (req, res) => {
     db.query(
     query,
     [email, password, fullname,  school],
-    (err, results) => {
+    (err, result) => {
       if (err) {
         console.error("Error occurred during registration:", err);
         res.status(500).send("Error occurred during registration.");
       } else {
-        //res.status(200).send('Registration successful!');
         res.render("index");
       }
     }
   );
+});
+*/
+
+app.post("/register", (req, res) => {
+  const { email, password, fullname, school } = req.body;
+
+  bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Error hashing password.");
+    }
+
+    const role = req.body.role;
+
+    let query 
+    if ( role == "student") query =  "INSERT INTO students (email, password, fullname, school) VALUES (?, ?, ?, ?)";
+    else query =  "INSERT INTO teachers (email, password, fullname, school) VALUES (?, ?, ?, ?)";
+    db.query(query, [email, hashedPassword, fullname, school], (err, results) => {
+      if (err) {
+        console.error("Error occurred during registration:", err);
+        res.status(500).send("Error occurred during registration.");
+      } else {
+        res.render("index");
+      }
+    });
+  });
+});
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  const role = req.body.role;
+
+  if ( role != "teacher") {
+    query =  "SELECT * FROM students WHERE email = ?"
+  }
+
+  else query =  "SELECT * FROM teachers WHERE email = ?";
+
+  db.query(query, [email], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.send("Error during login.");
+    }
+
+    if (results.length > 0) {
+    const user = results[0];
+
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send("Error verifying password.");
+        }
+
+        if (!isMatch) {
+          return res.status(400).send("Incorrect password.");
+        }
+
+        req.session.userId = user.id;
+        req.session.role = user.role || "student"; 
+
+        if (user.role === "teacher") {
+          res.redirect("/teacher/dashboard");
+        } 
+        else if  (user.role === "student"){
+          res.render("index");
+        }
+      });
+    } else {
+      res.send("Invalid email or password.");
+    }
+  });
 });
 
 app.get("/teacher/dashboard", (req, res) => {
@@ -129,11 +203,19 @@ app.get("/teacher/dashboard", (req, res) => {
 
 app.use("/", pageRoute);
 
-app.post("/login", (req, res) => {
+/*app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  // Veritabanından kullanıcıyı bul
-  const query = "SELECT * FROM teachers WHERE email = ? AND password = ?";
+  // ERRROR ->>
+
+  req.session.userId = user.id;
+  req.session.role = user.role;
+
+  let query
+  if (req.session.role == "student") {
+    res.redirect("index");
+  }
+  query = "SELECT * FROM teachers WHERE email = ? AND password = ?";
   db.query(query, [email, password], (err, results) => {
     if (err) {
       console.error(err);
@@ -143,23 +225,16 @@ app.post("/login", (req, res) => {
     if (results.length > 0) {
       const user = results[0];
 
-      // Kullanıcı bilgilerini session'a kaydet
-      req.session.userId = user.id;
-      req.session.role = user.role; // Kullanıcının rolünü session'a kaydediyoruz
-
-      // Session'ın doğru kaydedildiğini görmek için log ekleyin
-      console.log("Session:", req.session);
-
       if (user.role === "teacher") {
         res.redirect("/teacher/dashboard");
       } else {
-        res.redirect("/student/dashboard"); // Öğrenci yönlendirmesi
+        res.redirect("/index"); // Öğrenci yönlendirmesi
       }
     } else {
       res.send("Invalid email or password.");
     }
   });
-});
+});*/
 
 app.post("/add-student", (req, res) => {
   const { fullname, email, password, age } = req.body;

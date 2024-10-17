@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduGaming - Home</title>
+    <script src="partials/colorBlind.ejs"></script>
     <style>
         /* Genel stiller */
         body {
@@ -15,9 +16,6 @@
             padding: 0;
         }
 
-        
-
-        /* Ana içerik */
         h1 {
             font-size: 3em;
             margin-bottom: 10px;
@@ -39,6 +37,7 @@
             text-align: center;
             font-size: 1.2em;
             border-radius: 5px;
+            max-width: 20rem;
         }
 
         .game-download-btn:hover {
@@ -100,7 +99,6 @@
 </head>
 <%- include('./partials/_header') %>
 <body>
-    <!-- Ana İçerik -->
     <div class="container">
         <h1>Welcome to EduGaming!</h1>
         <p>At EduGaming, we believe that learning can be fun and interactive. Explore our collection of educational games that will challenge your mind and help you grow in knowledge. Whether you're improving your math skills or diving into science, our games are designed to be engaging for all ages.</p>
@@ -108,16 +106,10 @@
         <!-- Oyun İndirme Butonu -->
         <a href="/download-game" class="game-download-btn">Download the Game Now</a>
 
-
         <button class="color-blind-mode" onclick="toggleColorBlindMode()">Enable Color Blind Mode</button>
-    
-    </div>
-    <%- include('./partials/_footer') %>
 
-    <script>
-        function toggleColorBlindMode() {
-            document.body.classList.toggle('color-blind-active');
-        }
-    </script>
+    </div>
+
 </body>
+<%- include('./partials/_footer') %>
 </html>

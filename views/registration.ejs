@@ -68,36 +68,37 @@
             background-color: #45a049;
         }
 
-        /* Colorblind Mode Styles */
-        .colorblind-mode {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        .colorblind-mode .registration-container {
-            background-color: #fafafa;
-            border: 2px solid #000000;
-        }
-
-        .colorblind-mode .registration-container input,
-        .colorblind-mode .registration-container select {
-            border: 1px solid #000000;
-        }
-
-        .colorblind-mode .registration-container button {
-            background-color: #000000;
+        .color-blind-mode {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #333;
             color: white;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            width: 100%;
         }
 
-        .colorblind-mode .registration-container button:hover {
-            background-color: #000000;
+        .color-blind-mode:hover {
+            background-color: #555;
         }
 
-        /* Medya sorguları: küçük ekranlarda görünümü iyileştir */
-        @media (max-width: 400px) {
-            .registration-container {
-                padding: 20px;
-            }
+        /* Color Blind Mode aktif olduğunda uygulanacak stiller */
+        .color-blind-active {
+            background-color: #EFEFEF;
+            color: #000;
+        }
+
+        .color-blind-active .login-container {
+            background-color: #dcdcdc;
+        }
+
+        .color-blind-active .login-container button {
+            background-color: #333;
+        }
+
+        .color-blind-active .login-container button:hover {
+            background-color: #555;
         }
     </style>
 </head>
@@ -123,17 +124,6 @@
                 <option value="teacher">Teacher</option>
             </select><br><br>
 
-            <script>
-                let role = "student"
-                const selectElement = document.getElementById("selectId");
-                selectElement.addEventListener("change", function() {  
-                role = selectElement.value;
-                let age = document.getElementById("ageContainer")
-                if (role == "teacher") age.style.display = "none"
-                else age.style.display = "inline"
-                });
-            </script>
-
             <div id="ageContainer">
             <label for="age">Age:</label>
             <select id="age" name="age">
@@ -151,17 +141,29 @@
 
             <button type="submit">Register</button>
         </form>
-        <!-- Colorblind Mode Button -->
+
         <button id="colorblindButton" style="margin-top: 15px;">Toggle Colorblind Mode</button>
     </div>
 
     <script>
-        // JavaScript to toggle colorblind mode
         document.getElementById('colorblindButton').addEventListener('click', function() {
             document.body.classList.toggle('colorblind-mode');
         });
     </script>
-    <%- include('./partials/_footer') %>
+
+    <script>
+        let role = "student"
+        const selectElement = document.getElementById("selectId");
+        selectElement.addEventListener("change", function() {  
+        role = selectElement.value;
+        let age = document.getElementById("ageContainer")
+        if (role == "teacher") age.style.display = "none"
+        else age.style.display = "inline"
+        });
+    </script>
+    
     </div>
 </body>
+
+<%- include('./partials/_footer') %>
 </html>

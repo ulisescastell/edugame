@@ -9,12 +9,18 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
+            color: #333;
             margin: 0;
             padding: 0;
+            align-items: center;
+        }
+
+        .containerTotal {
             display: flex;
+            flex-direction: column;
+            margin-top: 5rem;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         .login-container {
@@ -108,7 +114,9 @@
         }
     </style>
 </head>
+<%- include('./partials/_header') %>
 <body>
+    <div class="containerTotal">
     <!-- Giriş Yapma Kutusu -->
     <div class="login-container">
         <h1>Login</h1>
@@ -119,11 +127,11 @@
             <label for="password">Password:</label>
             <input type="password" name="password" required><br><br>
           
-            <label for="role">Role:</label>
+            <!--<label for="role">Role:</label>
             <select name="role">
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
-            </select><br><br>
+            </select><br><br>-->
           
             <button type="submit">Login</button>
           </form>
@@ -139,5 +147,7 @@
             document.body.classList.toggle('color-blind-active');
         }
     </script>
+    </div>
 </body>
+<%- include('./partials/_footer') %>
 </html>
