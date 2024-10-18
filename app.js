@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   methodOverride("_method", {
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET", "PULL"],
   })
 );
 
@@ -133,13 +133,12 @@ app.post("/login", (req, res) => {
 
   const role = req.body.role;
 
-  if ( role != "teacher") {
+  if ( role == "student") {
     query =  "SELECT * FROM students WHERE email = ?"
   }
 
   else query =  "SELECT * FROM teachers WHERE email = ?";
-
-  db.query(query, [email], (err, results) => {
+    db.query(query, [email], (err, results) => {
     if (err) {
       console.error(err);
       return res.send("Error during login.");
@@ -164,12 +163,12 @@ app.post("/login", (req, res) => {
         if (user.role === "teacher") {
           res.redirect("/teacher/dashboard");
         } 
-        else if  (user.role === "student"){
+        else {
           res.render("index");
         }
       });
     } else {
-      res.send("Invalid email or password.");
+      res.send("Error during login.");
     }
   });
 });
